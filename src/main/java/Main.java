@@ -1,16 +1,11 @@
-import Controllers.ApplicationController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.hl7.fhir.dstu3.model.Bundle;
-import org.hl7.fhir.dstu3.model.Patient;
 
 public class Main extends Application {
     public static void main(String[] args) {
-        FhirClient fhirClient = new FhirClient();
-        Bundle result = fhirClient.getClient().search().forResource(Patient.class).returnBundle(org.hl7.fhir.dstu3.model.Bundle.class).execute();
         launch();
     }
 
