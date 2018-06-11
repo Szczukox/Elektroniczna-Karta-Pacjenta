@@ -1,13 +1,13 @@
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.hibernate.mapping.Array;
 import org.hl7.fhir.dstu3.model.Bundle;
 import org.hl7.fhir.dstu3.model.Patient;
 
@@ -26,6 +26,9 @@ public class ApplicationController implements Initializable {
     TableColumn<PatientModel, String> patientFirstNameTableColumn;
     @FXML
     TableColumn<PatientModel, String> patientLastNameTableColumn;
+
+    @FXML
+    TextField filterLastNameTextField;
 
     public void initialize(URL location, ResourceBundle resources) {
         FhirClient fhirClient = new FhirClient();
@@ -51,7 +54,22 @@ public class ApplicationController implements Initializable {
         patientFirstNameTableColumn.setCellValueFactory(new PropertyValueFactory<PatientModel, String>("firstName"));
         patientLastNameTableColumn.setCellValueFactory(new PropertyValueFactory<PatientModel, String>("lastName"));
 
-        patientsTableView.setItems(patientModels);
+        final FilteredList<PatientModel> filteredPatients = new FilteredList<PatientModel>(patientModels);
+
+        filterLastNameTextField.textProperty().addListener((observable, oldValues, newValues) -> filteredPatients.setPredicate(patient -> {
+            if (newValues == null || newValues.isEmpty()) {
+                return true;
+            }
+
+            String lowerCaseFilter = newValues.toLowerCase();
+
+            if (patient.getLastName().toLowerCase().startsWith(lowerCaseFilter)) {
+                return true;
+            }
+            return false;
+        }));
+
+        patientsTableView.setItems(filteredPatients);
     }
 
 }
