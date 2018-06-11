@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PatientCardController">
+   <children>
+      <Label fx:id="patientFullNameLabel" alignment="CENTER" layoutX="250.0" layoutY="14.0" prefHeight="53.0" prefWidth="700.0" text="Imię i nazwisko">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="250.0" layoutY="74.0" prefHeight="21.0" prefWidth="220.0" text="ID: " />
+      <Label layoutX="250.0" layoutY="103.0" prefHeight="21.0" prefWidth="220.0" text="Numer telefonu: " />
+      <Label layoutX="250.0" layoutY="131.0" prefHeight="21.0" prefWidth="220.0" text="Adres zamieszkania: " />
+      <Label fx:id="patientIdLabel" layoutX="470.0" layoutY="74.0" />
+      <Label fx:id="patientPhoneNumberLabel" layoutX="470.0" layoutY="103.0" />
+      <Label fx:id="patientAddressLabel" layoutX="470.0" layoutY="131.0" />
+   </children>
+</AnchorPane>

@@ -15,8 +15,6 @@ public class Main extends Application {
         ApplicationController applicationController = fxmlLoader.getController();
         primaryStage.setTitle("Elektroniczna Karta Pacjenta");
         primaryStage.setScene(new Scene(root, 1200, 800));
-        primaryStage.setMinWidth(1200);
-        primaryStage.setMinHeight(800);
         primaryStage.show();
     }
 }
