@@ -21,6 +21,7 @@ import org.hl7.fhir.dstu3.model.Patient;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -59,12 +60,16 @@ public class ApplicationController implements Initializable {
             String patientFirstName = patient.getNameFirstRep().getGivenAsSingleString();
             String patientLastName = patient.getNameFirstRep().getFamily();
             patient = client.read().resource(Patient.class).withId(patientId).execute();
+            //System.out.println(patient.getPhotoFirstRep().getUrl());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String patientBirthDate = simpleDateFormat.format(patient.getBirthDate());
             String patientPhoneNumber = patient.getTelecomFirstRep().getValue();
             String patientAddress = patient.getAddressFirstRep().getLine().get(0).getValue() + ", " +
                     patient.getAddressFirstRep().getCity() + ", " +
                     patient.getAddressFirstRep().getState() + " " + patient.getAddressFirstRep().getPostalCode() + ", " +
                     patient.getAddressFirstRep().getCountry();
-            patientModels.add(new PatientModel(patientId, patientFirstName, patientLastName, patientPhoneNumber, patientAddress));
+            String patientLanguage = patient.getCommunicationFirstRep().getLanguage().getCodingFirstRep().getDisplay();
+            patientModels.add(new PatientModel(patientId, patientFirstName, patientLastName, patientBirthDate, patientPhoneNumber, patientAddress, patientLanguage));
         }
 
         patientIdTableColumn.setCellValueFactory(new PropertyValueFactory<PatientModel, String>("id"));

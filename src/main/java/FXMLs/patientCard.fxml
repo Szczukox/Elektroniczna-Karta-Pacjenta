@@ -11,11 +11,15 @@
             <Font size="36.0" />
          </font>
       </Label>
-      <Label layoutX="250.0" layoutY="74.0" prefHeight="21.0" prefWidth="220.0" text="ID: " />
-      <Label layoutX="250.0" layoutY="103.0" prefHeight="21.0" prefWidth="220.0" text="Numer telefonu: " />
-      <Label layoutX="250.0" layoutY="131.0" prefHeight="21.0" prefWidth="220.0" text="Adres zamieszkania: " />
-      <Label fx:id="patientIdLabel" layoutX="470.0" layoutY="74.0" />
-      <Label fx:id="patientPhoneNumberLabel" layoutX="470.0" layoutY="103.0" />
-      <Label fx:id="patientAddressLabel" layoutX="470.0" layoutY="131.0" />
+      <Label layoutX="343.0" layoutY="76.0" prefHeight="21.0" prefWidth="220.0" text="ID: " />
+      <Label layoutX="343.0" layoutY="105.0" prefHeight="21.0" prefWidth="220.0" text="Data urodzenia: " />
+      <Label layoutX="343.0" layoutY="133.0" prefHeight="21.0" prefWidth="220.0" text="Numer telefonu: " />
+      <Label layoutX="343.0" layoutY="160.0" prefHeight="21.0" prefWidth="220.0" text="Adres zamieszkania: " />
+      <Label layoutX="343.0" layoutY="188.0" prefHeight="21.0" prefWidth="220.0" text="Język:" />
+      <Label fx:id="patientIdLabel" layoutX="563.0" layoutY="76.0" prefHeight="21.0" />
+      <Label fx:id="patientBirthDateLabel" layoutX="563.0" layoutY="105.0" prefHeight="21.0" />
+      <Label fx:id="patientPhoneNumberLabel" layoutX="563.0" layoutY="133.0" prefHeight="21.0" />
+      <Label fx:id="patientAddressLabel" layoutX="563.0" layoutY="160.0" prefHeight="21.0" />
+      <Label fx:id="patientLanguageLabel" layoutX="563.0" layoutY="188.0" prefHeight="21.0" />
    </children>
 </AnchorPane>

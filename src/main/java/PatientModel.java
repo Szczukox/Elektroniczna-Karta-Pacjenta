@@ -4,15 +4,19 @@ public class PatientModel {
     private SimpleStringProperty id;
     private SimpleStringProperty firstName;
     private SimpleStringProperty lastName;
+    private SimpleStringProperty birthDate;
     private SimpleStringProperty phoneNumber;
     private SimpleStringProperty address;
+    private SimpleStringProperty language;
 
-    public PatientModel(String id, String firstName, String lastName, String phoneNumber, String address) {
+    public PatientModel(String id, String firstName, String lastName, String birtDate, String phoneNumber, String address, String language) {
         this.id = new SimpleStringProperty(id);
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
+        this.birthDate = new SimpleStringProperty(birtDate);
         this.phoneNumber = new SimpleStringProperty(phoneNumber);
         this.address = new SimpleStringProperty(address);
+        this.language = new SimpleStringProperty(language);
     }
 
     public String getId() {
@@ -39,6 +43,14 @@ public class PatientModel {
         return lastName;
     }
 
+    public String getBirthDate() {
+        return birthDate.get();
+    }
+
+    public SimpleStringProperty birthDateProperty() {
+        return birthDate;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber.get();
     }
@@ -53,5 +65,13 @@ public class PatientModel {
 
     public SimpleStringProperty addressProperty() {
         return address;
+    }
+
+    public String getLanguage() {
+        return language.get();
+    }
+
+    public SimpleStringProperty languageProperty() {
+        return language;
     }
 }
