@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PatientCardController">
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" styleClass="background" stylesheets="@../background.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PatientCardController">
    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="203.0" layoutX="263.0" layoutY="16.0" opacity="0.65" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="675.0" />
       <Label fx:id="patientFullNameLabel" alignment="CENTER" layoutX="250.0" layoutY="14.0" prefHeight="53.0" prefWidth="700.0" text="Imię i nazwisko">
          <font>
             <Font size="36.0" />
@@ -21,5 +28,43 @@
       <Label fx:id="patientPhoneNumberLabel" layoutX="563.0" layoutY="133.0" prefHeight="21.0" />
       <Label fx:id="patientAddressLabel" layoutX="563.0" layoutY="160.0" prefHeight="21.0" />
       <Label fx:id="patientLanguageLabel" layoutX="563.0" layoutY="188.0" prefHeight="21.0" />
+      <DatePicker fx:id="fromDatePicker" layoutX="300.0" layoutY="300.0" prefHeight="31.0" prefWidth="250.0" />
+      <DatePicker fx:id="toDatePicker" layoutX="650.0" layoutY="300.0" prefHeight="31.0" prefWidth="250.0" />
+      <TabPane layoutX="100.0" layoutY="354.0" prefHeight="400.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Observations">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="1000.0">
+                     <children>
+                        <TableView fx:id="observationsTableView" prefHeight="362.0" prefWidth="1000.0">
+                          <columns>
+                            <TableColumn fx:id="dateTableColumnO" prefWidth="75.0" text="Data" />
+                            <TableColumn fx:id="statusTableColumnO" prefWidth="75.0" text="Status" />
+                              <TableColumn fx:id="categoryTableColumnO" prefWidth="75.0" text="Rodzaj obserwacji" />
+                              <TableColumn fx:id="codeTableColumnO" prefWidth="75.0" text="Parametr obserwacji" />
+                              <TableColumn fx:id="valueTableColumnO" prefWidth="75.0" text="Wartość parametru" />
+                              <TableColumn fx:id="unitTableColumnO" prefWidth="75.0" text="Jednostka pomiaru" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Medication Requests">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="1000.0">
+                     <children>
+                        <TableView fx:id="medicationRequestsTableView" prefHeight="362.0" prefWidth="1000.0">
+                          <columns>
+                            <TableColumn fx:id="dateTableColumnMR" prefWidth="75.0" text="Data" />
+                            <TableColumn fx:id="statusTableColumnMR" prefWidth="75.0" text="Status" />
+                              <TableColumn fx:id="intentTableColumnMR" prefWidth="75.0" text="Zamiar" />
+                              <TableColumn fx:id="medicationTableColumnMR" prefWidth="75.0" text="Lek" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>

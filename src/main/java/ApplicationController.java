@@ -47,11 +47,12 @@ public class ApplicationController implements Initializable {
         IGenericClient client = fhirClient.getClient();
         Bundle result = client.search().forResource(Patient.class).returnBundle(org.hl7.fhir.dstu3.model.Bundle.class).elementsSubset("identifier", "name").execute();
         ArrayList<Patient> patients = new ArrayList<Patient>();
-        while (result.getLink(Bundle.LINK_NEXT) != null) {
+        while (true) {
             for (Bundle.BundleEntryComponent patient : result.getEntry()) {
                 patients.add((Patient) patient.getResource());
             }
-            result = client.loadPage().next(result).execute();
+            if (result.getLink(Bundle.LINK_NEXT) != null) result = client.loadPage().next(result).execute();
+            else break;
         }
 
         ObservableList<PatientModel> patientModels = FXCollections.observableArrayList();
@@ -60,7 +61,6 @@ public class ApplicationController implements Initializable {
             String patientFirstName = patient.getNameFirstRep().getGivenAsSingleString();
             String patientLastName = patient.getNameFirstRep().getFamily();
             patient = client.read().resource(Patient.class).withId(patientId).execute();
-            //System.out.println(patient.getPhotoFirstRep().getUrl());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
             String patientBirthDate = simpleDateFormat.format(patient.getBirthDate());
             String patientPhoneNumber = patient.getTelecomFirstRep().getValue();
@@ -86,7 +86,7 @@ public class ApplicationController implements Initializable {
 
             String lowerCaseFilter = newValues.toLowerCase();
 
-            return patient.getLastName().toLowerCase().startsWith(lowerCaseFilter);
+            return patient.getLastName().toLowerCase().contains(lowerCaseFilter);
         }));
 
         patientsTableView.setItems(filteredPatients);
@@ -107,6 +107,8 @@ public class ApplicationController implements Initializable {
                             PatientCardController patientCardController = fxmlLoader.getController();
                             PatientModel selectedPatient = patientsTableView.getSelectionModel().getSelectedItem();
                             patientCardController.setPatient(selectedPatient);
+                            patientCardController.searchPatientObservation();
+                            patientCardController.searchPatientMedicationRequest();
                             Parent parent = fxmlLoader.getRoot();
                             Stage stage = new Stage();
                             stage.setTitle("Karta Pacjenta - " + selectedPatient.getFirstName() + " " + selectedPatient.getLastName());
