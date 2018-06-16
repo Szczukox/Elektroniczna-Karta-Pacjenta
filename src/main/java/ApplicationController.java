@@ -45,7 +45,7 @@ public class ApplicationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         FhirClient fhirClient = new FhirClient();
         IGenericClient client = fhirClient.getClient();
-        Bundle result = client.search().forResource(Patient.class).returnBundle(org.hl7.fhir.dstu3.model.Bundle.class).elementsSubset("identifier", "name").execute();
+        Bundle result = client.search().forResource(Patient.class).returnBundle(Bundle.class).elementsSubset("identifier", "name").execute();
         ArrayList<Patient> patients = new ArrayList<Patient>();
         while (true) {
             for (Bundle.BundleEntryComponent patient : result.getEntry()) {
