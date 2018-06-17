@@ -2,12 +2,11 @@ import ca.uhn.fhir.rest.client.api.IGenericClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.hl7.fhir.dstu3.model.Bundle;
 import org.hl7.fhir.dstu3.model.MedicationRequest;
@@ -20,8 +19,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class PatientCardController implements Initializable {
 
@@ -56,7 +54,7 @@ public class PatientCardController implements Initializable {
     TableView<MedicationRequestModel> medicationRequestsTableView;
 
     @FXML
-    TableColumn<ObservationModel, String> dateTableColumnO;
+    TableColumn<ObservationModel, Date> dateTableColumnO;
     @FXML
     TableColumn<ObservationModel, String> statusTableColumnO;
     @FXML
@@ -69,13 +67,18 @@ public class PatientCardController implements Initializable {
     TableColumn<ObservationModel, String> unitTableColumnO;
 
     @FXML
-    TableColumn<MedicationRequestModel, String> dateTableColumnMR;
+    TableColumn<MedicationRequestModel, Date> dateTableColumnMR;
     @FXML
     TableColumn<MedicationRequestModel, String> statusTableColumnMR;
     @FXML
     TableColumn<MedicationRequestModel, String> intentTableColumnMR;
     @FXML
     TableColumn<MedicationRequestModel, String> medicationTableColumnMR;
+
+    @FXML
+    Tab observationTab;
+    @FXML
+    Tab medicationRequestTab;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -91,14 +94,14 @@ public class PatientCardController implements Initializable {
         fromDatePicker.setValue(LocalDate.parse("01-01-1900", dateTimeFormatter));
         toDatePicker.setValue(LocalDate.parse(currentDate, dateTimeFormatter));
 
-        dateTableColumnO.setCellValueFactory(new PropertyValueFactory<ObservationModel, String>("date"));
+        dateTableColumnO.setCellValueFactory(new PropertyValueFactory<ObservationModel, Date>("date"));
         statusTableColumnO.setCellValueFactory(new PropertyValueFactory<ObservationModel, String>("status"));
         categoryTableColumnO.setCellValueFactory(new PropertyValueFactory<ObservationModel, String>("category"));
         codeTableColumnO.setCellValueFactory(new PropertyValueFactory<ObservationModel, String>("code"));
         valueTableColumnO.setCellValueFactory(new PropertyValueFactory<ObservationModel, String>("value"));
         unitTableColumnO.setCellValueFactory(new PropertyValueFactory<ObservationModel, String>("unit"));
 
-        dateTableColumnMR.setCellValueFactory(new PropertyValueFactory<MedicationRequestModel, String>("date"));
+        dateTableColumnMR.setCellValueFactory(new PropertyValueFactory<MedicationRequestModel, Date>("date"));
         statusTableColumnMR.setCellValueFactory(new PropertyValueFactory<MedicationRequestModel, String>("status"));
         intentTableColumnMR.setCellValueFactory(new PropertyValueFactory<MedicationRequestModel, String>("intent"));
         medicationTableColumnMR.setCellValueFactory(new PropertyValueFactory<MedicationRequestModel, String>("medication"));
@@ -108,6 +111,28 @@ public class PatientCardController implements Initializable {
 
         observationsTableView.getSortOrder().add(dateTableColumnO);
         medicationRequestsTableView.getSortOrder().add(dateTableColumnMR);
+
+        observationTab.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                if (observationTab.isSelected()) {
+                    String currentDate = dateFormat.format(new Date());
+                    fromDatePicker.setValue(LocalDate.parse("01-01-1900", dateTimeFormatter));
+                    toDatePicker.setValue(LocalDate.parse(currentDate, dateTimeFormatter));
+                }
+            }
+        });
+
+        medicationRequestTab.setOnSelectionChanged(new EventHandler<Event>() {
+            @Override
+            public void handle(Event event) {
+                if (medicationRequestTab.isSelected()) {
+                    String currentDate = dateFormat.format(new Date());
+                    fromDatePicker.setValue(LocalDate.parse("01-01-1900", dateTimeFormatter));
+                    toDatePicker.setValue(LocalDate.parse(currentDate, dateTimeFormatter));
+                }
+            }
+        });
     }
 
     public void setPatient(PatientModel patientModel) {
@@ -174,9 +199,27 @@ public class PatientCardController implements Initializable {
             }
         })));
 
+        Collections.sort(observations, new Comparator<ObservationModel>() {
+            @Override
+            public int compare(ObservationModel o1, ObservationModel o2) {
+                Date o1Date = null;
+                Date o2Date = null;
+                try {
+                    o1Date = dateFormat.parse(o1.getDate());
+                    o2Date = dateFormat.parse(o2.getDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (o1Date.after(o2Date)) {
+                    return -1;
+                } else if (o2Date.after(o1Date)) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
         observationsTableView.setItems(filteredObservations);
-
-        System.out.println(observations.size());
     }
 
     public void searchPatientMedicationRequest() {
@@ -203,8 +246,6 @@ public class PatientCardController implements Initializable {
 
         final FilteredList<MedicationRequestModel> filteredMedicalRequests = new FilteredList<MedicationRequestModel>(medicationRequests);
 
-        medicationRequestsTableView.setItems(filteredMedicalRequests);
-
         fromDatePicker.valueProperty().addListener((observable, oldValues, newValues) -> filteredMedicalRequests.setPredicate(medicationRequestModel -> {
             if (newValues == null) {
                 return true;
@@ -229,6 +270,27 @@ public class PatientCardController implements Initializable {
             }
         })));
 
-        System.out.println(medicationRequests.size());
+        Collections.sort(medicationRequests, new Comparator<MedicationRequestModel>() {
+            @Override
+            public int compare(MedicationRequestModel o1, MedicationRequestModel o2) {
+                Date o1Date = null;
+                Date o2Date = null;
+                try {
+                    o1Date = dateFormat.parse(o1.getDate());
+                    o2Date = dateFormat.parse(o2.getDate());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if (o1Date.after(o2Date)) {
+                    return -1;
+                } else if (o2Date.after(o1Date)) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+
+        medicationRequestsTableView.setItems(filteredMedicalRequests);
     }
 }

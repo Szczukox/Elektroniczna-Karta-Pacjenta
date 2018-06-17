@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="800.0" prefWidth="1200.0" styleClass="background" stylesheets="@../background.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="PatientCardController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="203.0" layoutX="263.0" layoutY="16.0" opacity="0.65" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="675.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="332.0" layoutX="263.0" layoutY="16.0" opacity="0.65" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="675.0" />
       <Label fx:id="patientFullNameLabel" alignment="CENTER" layoutX="250.0" layoutY="14.0" prefHeight="53.0" prefWidth="700.0" text="Imię i nazwisko">
          <font>
             <Font size="36.0" />
@@ -32,33 +32,33 @@
       <DatePicker fx:id="toDatePicker" layoutX="650.0" layoutY="300.0" prefHeight="31.0" prefWidth="250.0" />
       <TabPane layoutX="100.0" layoutY="354.0" prefHeight="400.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Observations">
+          <Tab fx:id="observationTab" text="Observations">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="1000.0">
                      <children>
                         <TableView fx:id="observationsTableView" prefHeight="362.0" prefWidth="1000.0">
                           <columns>
-                            <TableColumn fx:id="dateTableColumnO" prefWidth="144.99998474121094" text="Data" />
-                            <TableColumn fx:id="statusTableColumnO" prefWidth="154.0" text="Status" />
-                              <TableColumn fx:id="categoryTableColumnO" prefWidth="180.0" text="Rodzaj obserwacji" />
-                              <TableColumn fx:id="codeTableColumnO" prefWidth="120.0" text="Parametr obserwacji" />
-                              <TableColumn fx:id="valueTableColumnO" prefWidth="197.0" text="Wartość parametru" />
-                              <TableColumn fx:id="unitTableColumnO" prefWidth="203.0" text="Jednostka pomiaru" />
+                            <TableColumn fx:id="dateTableColumnO" prefWidth="108.00001525878906" text="Data" />
+                            <TableColumn fx:id="statusTableColumnO" prefWidth="68.0" text="Status" />
+                              <TableColumn fx:id="categoryTableColumnO" prefWidth="134.0" text="Rodzaj obserwacji" />
+                              <TableColumn fx:id="codeTableColumnO" prefWidth="361.0" text="Parametr obserwacji" />
+                              <TableColumn fx:id="valueTableColumnO" prefWidth="163.0" text="Wartość parametru" />
+                              <TableColumn fx:id="unitTableColumnO" prefWidth="143.0" text="Jednostka pomiaru" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="Medication Requests">
+          <Tab fx:id="medicationRequestTab" text="Medication Requests">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="1000.0">
                      <children>
                         <TableView fx:id="medicationRequestsTableView" prefHeight="362.0" prefWidth="1000.0">
                           <columns>
-                            <TableColumn fx:id="dateTableColumnMR" prefWidth="248.0" text="Data" />
-                            <TableColumn fx:id="statusTableColumnMR" prefWidth="245.99998474121094" text="Status" />
-                              <TableColumn fx:id="intentTableColumnMR" prefWidth="293.0" text="Zamiar" />
-                              <TableColumn fx:id="medicationTableColumnMR" prefWidth="212.0" text="Lek" />
+                            <TableColumn fx:id="dateTableColumnMR" prefWidth="121.99998474121094" text="Data" />
+                            <TableColumn fx:id="statusTableColumnMR" prefWidth="131.0" text="Status" />
+                              <TableColumn fx:id="intentTableColumnMR" prefWidth="122.0" text="Cel" />
+                              <TableColumn fx:id="medicationTableColumnMR" prefWidth="605.0" text="Lek" />
                           </columns>
                         </TableView>
                      </children></AnchorPane>
@@ -66,5 +66,20 @@
           </Tab>
         </tabs>
       </TabPane>
+      <Label layoutX="476.0" layoutY="227.0" text="Zakres danych pacjenta">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="411.0" layoutY="262.0" text="od">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="761.0" layoutY="262.0" text="do">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
